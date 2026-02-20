@@ -37,7 +37,7 @@ async def test_bnn_classifier(dut):
         await FallingEdge(dut.clk)
         
         # Read the first output pin (uo_out[0])
-        hardware_prediction = dut.uo_out[0].value
+        hardware_prediction = int(dut.uo_out.value) & 1
         
         # Log results
         dut._log.info(f"Vitals IN: {bin(patient_data)} | Hardware OUT: {hardware_prediction} | Expected: {expected_diagnosis}")
