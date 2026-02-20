@@ -9,7 +9,7 @@
 
 ## Datasheet (PDF)
 
-- **Datasheet**: `docs/datasheet.pdf` (add the file to that path, commit, and push — then this link will work on GitHub)
+- **Datasheet**: `docs/datasheet.pdf` 
 - **Link**: [Neuro-Kinematic Datasheet](docs/datasheet.pdf)
 
 ## Overview
