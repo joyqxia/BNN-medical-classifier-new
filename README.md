@@ -15,7 +15,7 @@ We took a raw medical dataset, trained a quantized neural network, and successfu
 
 Neuro-Kinematic is a hardware-accelerated Application-Specific Integrated Circuit (ASIC) designed to diagnose heart disease entirely on-chip. Instead of relying on a power-hungry CPU or cloud connection, we synthesized a Binarized Neural Network (BNN) directly into physical logic gates.
 
-The hardware takes 8 thresholded biometric markers from the Cleveland Heart Disease dataset and processes them through parallel XNOR gates (representing quantized PyTorch weights) and a physical adder tree (Popcount). If the patient's match score hits the binarized threshold, the hardware flags the diagnosis in a single clock cycle at 50 MHz.
+The hardware takes 8 thresholded biometric markers from the [Cleveland Heart Disease dataset](https://www.kaggle.com/datasets/cherngs/heart-disease-cleveland-uci) and processes them through parallel XNOR gates (representing quantized PyTorch weights) and a physical adder tree (Popcount). If the patient's match score hits the binarized threshold, the hardware flags the diagnosis in a single clock cycle at 50 MHz.
 
 ## Datasheet (PDF)
 
@@ -175,7 +175,7 @@ See [LICENSE](LICENSE) file for details.
 - [Project Documentation](docs/info.md)
 - [Tiny Tapeout Documentation](https://tinytapeout.com)
 - [LibreLane Documentation](https://www.zerotoasiccourse.com/terminology/librelane/)
-- [Cleveland Heart Disease Dataset](https://archive.ics.uci.edu/ml/datasets/heart+disease)
+- [Cleveland Heart Disease Dataset (Kaggle)](https://www.kaggle.com/datasets/cherngs/heart-disease-cleveland-uci) - Dataset used for training
 
 ## Acknowledgments
 
