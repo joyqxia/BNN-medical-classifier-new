@@ -1,11 +1,10 @@
 # Tiny Tapeout project information
 project:
-  title:        "BNN Medical Classifier"      # Project title
-  author:       ""      # Your name
-  discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "BNN ASIC that will read entered symptoms and bodily measurements and from that, the model would predict a long-term disease that you might get"      # One line description of what your project does
-  language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
+  title: "Neuro-Kinematic BNN Classifier"
+  description: "Hardware-accelerated Cleveland Heart Disease classifier using a Binarized Neural Network."
+  author: "Sheraz, Joy, Philip  Subodh"
+  clock_hz: 50000000
+  language: "Verilog"
 
   # How many tiles your design occupies? A single tile is about 167x108 uM.
   tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
