@@ -24,7 +24,7 @@ module tt_um_bnn_classifier (
                              xnor_result[6] + xnor_result[7];
 
     // 4. THE ACTIVATION THRESHOLD
-    wire high_risk_detected = (match_score >= 4'd5) ? 1'b1 : 1'b0;
+    wire high_risk_detected = (match_score >= 4'd4) ? 1'b1 : 1'b0;
 
     // 5. ASSIGN OUTPUT PINS
     assign uo_out[0] = high_risk_detected;
