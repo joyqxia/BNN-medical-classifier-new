@@ -7,6 +7,11 @@
 
 **Hardware-accelerated medical diagnosis using a Binarized Neural Network (BNN) ASIC**
 
+## Datasheet (PDF)
+
+- **Datasheet**: `docs/datasheet.pdf` (add the file to that path, commit, and push — then this link will work on GitHub)
+- **Link**: [Neuro-Kinematic Datasheet](docs/datasheet.pdf)
+
 ## Overview
 
 We took a raw medical dataset, trained a quantized neural network, and successfully translated it into a fully verifiable, manufacturable silicon chip. This project demonstrates the complete pipeline from machine learning model training to hardware implementation, creating a low-power, high-speed medical diagnostic ASIC that operates entirely on-chip without requiring cloud connectivity or complex external processors.
