@@ -37,9 +37,9 @@ async def test_bnn_classifier(dut):
         await FallingEdge(dut.clk)
         
         # Read the first output pin (uo_out[0])
-        # Give the gates one more cycle to settle, then read as a string
-        await ClockCycles(dut.clk, 1)
-        output_str = dut.uo_out.value.binstr
+        # Wait 5 clock cycles to let data penetrate the hardware synchronizers
+        await ClockCycles(dut.clk, 5)
+        output_str = str(dut.uo_out.value)
         hardware_prediction = 1 if output_str[-1] == '1' else 0
         
         # Log results
