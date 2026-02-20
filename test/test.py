@@ -37,7 +37,10 @@ async def test_bnn_classifier(dut):
         await FallingEdge(dut.clk)
         
         # Read the first output pin (uo_out[0])
-        hardware_prediction = int(dut.uo_out.value) & 1
+        # Give the gates one more cycle to settle, then read as a string
+        await ClockCycles(dut.clk, 1)
+        output_str = dut.uo_out.value.binstr
+        hardware_prediction = 1 if output_str[-1] == '1' else 0
         
         # Log results
         dut._log.info(f"Vitals IN: {bin(patient_data)} | Hardware OUT: {hardware_prediction} | Expected: {expected_diagnosis}")
