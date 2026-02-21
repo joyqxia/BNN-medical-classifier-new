@@ -1,0 +1,70 @@
+// ============================================================================
+// PART 1: TOP LEVEL WRAPPER FOR DE1-SoC FPGA
+// This bridges the physical board switches to your AI logic.
+// ============================================================================
+module de1_fpga_demo (
+    input  [9:0] SW,   // The 10 physical slide switches on the board
+    input  [3:0] KEY,  // The 4 physical push buttons
+    output [9:0] LEDR  // The 10 red LEDs above the switches
+);
+
+    // Instantiate your Neuro-Kinematic AI chip
+    tt_um_bnn_classifier my_ai_chip (
+        .ui_in   (SW[7:0]),      // Connect Switches 0-7 to your 8 patient vitals
+        .uo_out  (LEDR[7:0]),    // Connect the AI's output to the LEDs (LEDR[0] is diagnosis)
+        .uio_in  (8'b00000000),  // Ground the unused Tiny Tapeout inputs
+        .uio_out (),             // Leave unused outputs disconnected
+        .uio_oe  (),             // Leave unused enables disconnected
+        .ena     (1'b1),         // Hardwire the chip to be ON
+        .clk     (KEY[0]),       // Map Clock to Button 0 
+        .rst_n   (KEY[1])        // Map Reset to Button 1 
+    );
+
+    // Turn off the extra unused LEDs (8 and 9) so they don't confuse the judges
+    assign LEDR[9:8] = 2'b00;
+
+endmodule
+
+// ============================================================================
+// PART 2: YOUR NEURO-KINEMATIC AI CHIP (From project.v)
+// ============================================================================
+`default_nettype none
+
+module tt_um_bnn_classifier (
+    input  wire [7:0] ui_in,    // Dedicated inputs (Our 8 medical vitals)
+    output wire [7:0] uo_out,   // Dedicated outputs
+    input  wire [7:0] uio_in,   // IOs: Input path
+    output wire [7:0] uio_out,  // IOs: Output path
+    output wire [7:0] uio_oe,   // IOs: Enable path
+    input  wire       ena,      // always 1 when the design is powered
+    input  wire       clk,      // clock
+    input  wire       rst_n     // reset_n - low to reset
+);
+
+    // 1. THE HARDCODED AI WEIGHTS (From PyTorch Model)
+    wire [7:0] trained_weights = 8'b11110011;
+
+    // 2. THE NEURAL NETWORK MULTIPLICATION (XNOR Gate)
+    wire [7:0] xnor_result = ~(ui_in ^ trained_weights);
+
+    // 3. THE POPCOUNT (Adder Tree)
+    wire [3:0] match_score = xnor_result[0] + xnor_result[1] +
+                             xnor_result[2] + xnor_result[3] +
+                             xnor_result[4] + xnor_result[5] +
+                             xnor_result[6] + xnor_result[7];
+
+    // 4. THE ACTIVATION THRESHOLD
+    wire high_risk_detected = (match_score >= 4'd4) ? 1'b1 : 1'b0;
+
+    // 5. ASSIGN OUTPUT PINS
+    assign uo_out[0] = high_risk_detected;
+
+    // Explicitly tie off all unused pins to 0 to prevent synthesis routing errors
+    assign uo_out[7:1] = 7'b0000000;
+    assign uio_out = 8'b00000000;
+    assign uio_oe  = 8'b00000000;
+
+    // 6. SUPPRESS UNUSED SIGNAL WARNINGS
+    wire _unused = &{ena, clk, rst_n, uio_in, 1'b0};
+
+endmodule
